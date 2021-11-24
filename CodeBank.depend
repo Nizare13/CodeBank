@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1637680072 source:c:\users\youcode\desktop\nouveau dossier\codebank\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1637667882 source:c:\users\youcode\desktop\ddd.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

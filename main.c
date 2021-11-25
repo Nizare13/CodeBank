@@ -12,11 +12,10 @@ struct account {
 void menu(char *msg);
 void addAccount();
 void addAccount(int backToMenu);
-void Operations();
 void Retrait();
 void Depot();
-void Informations();
-
+void Operations();
+void fidelity();
 
 int main()
 {
@@ -30,9 +29,9 @@ menu(int msg){
 
     system("cls||clear");
     int choice;
-    printf("\t\t\t\t +WELCOM TO CODEBANK MANAGER+ \n\n\n");
+    printf("\t\t\t\t\t +Welcome To CodeBank Manager+  \n\n\n");
     if(msg == 1){
-        printf(" \n Invalid Option!! \n");
+        printf(" \n Invalid Option! \n");
     }
     printf("      1 : Add New Account\n");
     printf("      2 : Add multiply Account\n");
@@ -60,7 +59,7 @@ menu(int msg){
         Informations();
         break;
     case 5 :
-        Fidalisation();
+        fidelity();
         break;
     case 0 :
         return;
@@ -92,7 +91,6 @@ addAccount(int backToMenu){
          printf("\tenter the montant\n");
 
          scanf("%f",&add.Montant);
-
     fprintf(pWrite, "%s\t%s\t%s\t%.2f\n", add.CIN, add.Prenom, add.Nom, add.Montant);
          if(backToMenu == 1){
             menu(0);
@@ -101,12 +99,12 @@ addAccount(int backToMenu){
 }
 
 addMultiplyAccount(){
-
     printf("n\n\add multiply account \n\n\n");
 
         char choice = 'y';
         while(choice == 'y' || choice == 'Y' ){
         addAccount(0);
+
         printf(" \n Add an other Account: (y/n)  ");
         scanf("%s",&choice);
 
@@ -147,41 +145,44 @@ Operations(){
     }
 }
 
- Informations(){
-
-     system("cls||clear");
-    int F;
-
-         printf("\t*F : Tape Your Sold  \n\n");
-         scanf("%i",&F);
-         printf("\t0 : Back To Menu \n\n");
-         printf("Select an operation: ");
 
 
+Retrait(){
+    printf("retrait");
+}
+Depot(){
+    printf("depot");
 
-    switch(choice){
-    case 1 :
-        printf("the Ascendant");
-        break;
-    case 2 :
-        printf("the Ascendant");
-        break;
-    case 3 :
-        printf("the Ascendant (Montant)");
-        break;
-    case 4 :
-        printf("The Descendan (Montant)");
-        break;
-     case 5 :
-        printf("CIN");
-        break;
-    case 0 :
-        menu(0);
-        break;
+}
 
-    default :
-        printf("invalid option");
 
- }
- }
+Informations(){
+
+        system("cls||clear");
+
+        printf(" *Infos\n");
+
+        printf("\t 1: Par Ordre Ascendant\n");
+
+        printf("\t 2: Par Ordre Descendant\n");
+
+        printf("\t 3: Par Ordre Ascendant (montant) \n");
+
+        printf("\t 4: Par Ordre Descendant (montant) \n");
+
+        printf("\t 5: CIN \n");
+
+        printf("\t 00 : Back \n\n");
+
+        printf("Choose an option :");
+        scanf("\t%i",&Informations);
+
+
+        }
+
+fidelity(){
+
+        printf("fidelity\n");
+          scanf("%d",&fidelity);
+        }
 

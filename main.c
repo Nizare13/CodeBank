@@ -1,187 +1,330 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
-struct account {
-     char CIN[10];
-     char Nom[10];
-     char Prenom[10];
-     float Montant;
-}add;
+//struct OF an Account/
+   struct account {
+	char CIN[13];
+	char Nom[13];
+	char Prenom[13];
+	float Montant;
+};
 
-void menu(char *msg);
-void addAccount();
-void addAccount(int backToMenu);
-void Operations();
-void Retrait();
-void Depot();
-void Informations();
+        struct account Tab_C[666];
 
+         int all_account = 0;
 
-int main()
-{
-    menu(0);
+// Cleaner Function
+
+     void cleanCls(){
+	system("cls||clear");
 
 }
 
 
-
-menu(int msg){
-
-    system("cls||clear");
-    int choice;
-    printf("\t\t\t\t +WELCOM TO CODEBANK MANAGER+ \n\n\n");
-    if(msg == 1){
-        printf(" \n Invalid Option!! \n");
-    }
-    printf("      1 : Add New Account\n");
-    printf("      2 : Add multiply Account\n");
-    printf("      3 : Operations\n");
-    printf("      4 : Informations\n");
-    printf("      5 : fidelity\n\n");
-    printf("      00 : Exite\n\n\n");
-
-    printf("Select an option from the Menu: ");
-    scanf("%d",&choice);
+//fonctions add account
 
 
-    switch(choice){
-    case 1 :
-         addAccount(1);
+bool add_account(int n){
 
-       break;
-    case 2 :
-        addMultiplyAccount();
-        break;
-    case 3 :
-        Operations();
-        break;
-    case 4 :
-        Informations();
-        break;
-    case 5 :
-        Fidalisation();
-        break;
-    case 0 :
-        return;
-        break;
-    default :
-        system("cls||clear");
+	int i;
 
-        menu(1);
-         break;
-    }
+	for (i = 0 ; i < n; i++){
+
+		printf("Enter CIN code : ");
+        scanf("%s", Tab_C[all_account].CIN);
+
+		printf("Enter your lastname : ");
+		scanf("%s", Tab_C[all_account].Nom);
+
+		printf("Enter your Name : ");
+		scanf("%s", Tab_C[all_account].Prenom);
+
+		printf("Enter an amount : ");
+		scanf("%f", &Tab_C[all_account].Montant);
+
+            all_account++;
+	}
+
+	return true;
+}
+
+bool Deposit(char CIN[10]) {
 
 }
 
+// Operation
+bool operations(){
 
-addAccount(int backToMenu){
+	int _choice_, i;
+	char CIN[13];
+	float Option;
 
-    system("cls||clear");
-    FILE *pWrite;
-    pWrite = fopen("Accounts.txt", "a");
-         printf("\tEnter CIN code:\n");
-         scanf("%s",&add.CIN);
+	printf("Enter The CIN code  : ");
+	scanf("%s", CIN);
 
-         printf("\tEnter your name\n");
-         scanf("%s",&add.Prenom);
+	cleanCls();
+	do {
+		printf("\n\n\n\n");
+		printf("\t  1. Deposit \n \n \n");
+		printf("\t  2. Withdraw \n \n \n");
+		printf("\t  0. Main Menu \n \n");
+		printf("Enter Your Choice : ");
+		scanf("%d", &_choice_);
 
-         printf("\tEnter you last name\n");
-         scanf("%s",&add.Nom);
+		switch (_choice_) {
+			case 1 :
+				cleanCls();
+					for(i = 0; i < all_account; i++) {
+			        	if (strcmp(CIN, Tab_C[i].CIN) == 0) {
 
-         printf("\tenter the montant\n");
+							printf("Enter Operation amount to Deposit : ");
+							scanf("%f", &Option);
+                        Tab_C[i].Montant += Option;
 
-         scanf("%f",&add.Montant);
+                        printf("Your Amount for now : %g MAD \n", Tab_C[i].Montant);
+                                                             }
+					                                  }
+				break;
+			case 2 :
+				cleanCls();
+				for(i = 0; i < all_account; i++) {
+						if (strcmp(CIN, Tab_C[i].CIN) == 0) {
 
-    fprintf(pWrite, "%s\t%s\t%s\t%.2f\n", add.CIN, add.Prenom, add.Nom, add.Montant);
-         if(backToMenu == 1){
-            menu(0);
-         }
+            printf("Select an Operation Amount to Withdraw : ");
+            scanf("%f", &Option);
+                        if (Tab_C[i].Montant >= Option)
+								Tab_C[i].Montant -= Option;
+							else
+								printf("The Balance is less than %f MAD \n", Option);
 
-}
+							printf("Your Amount is : %f MAD\n \n \n", Tab_C[i].Montant);
+						}
+					}
+				break;
+			default : printf("Invalid Select!! \n");
+		}
+	}while (_choice_ != 0);
 
-addMultiplyAccount(){
-
-    printf("n\n\add multiply account \n\n\n");
-
-        char choice = 'y';
-        while(choice == 'y' || choice == 'Y' ){
-        addAccount(0);
-        printf(" \n Add an other Account: (y/n)  ");
-        scanf("%s",&choice);
-
-            }
-        menu(0);
-
-
-
-
+	  cleanCls();
 }
 
 
 
-Operations(){
-    system("cls||clear");
-    int choice;
-         printf("operation: \n\n");
-         printf("\t1 : Retrait \n");
-         printf("\t2 : Depot \n\n");
-         printf("\t0 : Back To Menu \n\n");
-         printf("Select an operation: ");
+//display function
 
-         scanf("%d",&choice);
+ void display() {
+	cleanCls();
+    struct account temp_account;
+    char CIN[13];
+	int _choice, __choice, i, j;
+	do {
+		printf("\t  1. sorting by amount \n ");
+		printf("\t  2. sorting by lastname \n ");
+		printf("\t  3. Search by CIN code  \n ");
+		printf("\t  0. Main Menu \n \n \n");
+		printf("Select an Option : \n");
+		scanf("%d", &_choice);
+// Display Condition
+		switch (_choice) {
+			case 1 :
+				printf("\t \t \t 1. Descending Order  \n \n \n");
+				printf("\t \t \t 2. Ascending Order \n \n \n");
+				printf("Select an Option : ");
+				scanf("%d", &__choice);
+                switch (__choice) {
+					case 1 :
+						printf("You have chosen the sort by >>  amount >> Descending Order \n");
+						for(i = 0 ; i < all_account ; i++)
+						{
+						    for(j = 0 ; j < all_account-i-1 ; j++)
+						    {
+						        if(Tab_C[j].Montant < Tab_C[j+1].Montant)
+						        {
+						        	temp_account = Tab_C[j+1];
+						            Tab_C[j+1]=Tab_C[j];
+						            Tab_C[j]=temp_account;
+						        }
+						    }
+						}
+						printf("CIN code\t lastname \t Name \t Amount\n\n");
+						for (i = 0 ; i < all_account ; i++) {
+							printf("%s \t %s \t %s \t %g \n", Tab_C[i].CIN, Tab_C[i].Nom, Tab_C[i].Prenom, Tab_C[i].Montant);
+						}
+						break;
 
-    switch(choice){
-    case 1 :
-        Retrait();
-        break;
-    case 2 :
-        Depot();
-        break;
-    case 0 :
-        menu(0);
-        break;
-    default :
-        printf("invalid option");
-        Operations();
-    }
+					case 2 :
+						printf("You did choose the sort by ----> amount ----> Ascending Order \n");
+                        struct account temp_account;
+						for(i = 0 ; i < all_account ; i++)
+						{
+						    for(j = 0 ; j < all_account-i-1 ; j++)
+						    {
+						        if(Tab_C[j].Montant > Tab_C[j+1].Montant)
+						        {
+						        	temp_account = Tab_C[j+1];
+						            Tab_C[j+1]=Tab_C[j];
+						            Tab_C[j]=temp_account;
+						        }
+						    }
+						}
+						printf("CIN \t lastname \t Name \t Amount\n\n");
+						for (i = 0 ; i < all_account ; i++) {
+							printf("%s \t %s \t %s \t %.2f \n", Tab_C[i].CIN, Tab_C[i].Nom, Tab_C[i].Prenom, Tab_C[i].Montant);
+						}
+						break;
+				}
+				break;
+				default : printf("Invalid select !! \n");
+			case 2 :
+                printf("\t \t \t 1. Descending Order \n \n \n");
+				printf("\t \t \t 2. Ascending Order \n \n \n");
+				printf("choose an Option: ");
+				scanf("%d", &__choice);
+				switch (__choice) {
+					case 1 :
+						printf("You have chosen the sort by ----> LastName ----> Descending Order \n");
+						for(i = 0 ; i < all_account ; i++)
+						{
+						    for(j = 0 ; j < all_account-i-1 ; j++)
+						    {
+						        if(strcmp(Tab_C[j].Nom, Tab_C[j+1].Nom) > 0){
+						        	temp_account = Tab_C[j+1];
+						            Tab_C[j+1]=Tab_C[j];
+						            Tab_C[j]=temp_account;
+						        }
+						    }
+						}
+						printf("CIN \t lastname \t Name \t Amount\n\n");
+
+
+						for (i = 0 ; i < all_account ; i++) {
+							printf("%s \t %s \t %s \t %g \n", Tab_C[i].CIN, Tab_C[i].Nom, Tab_C[i].Prenom, Tab_C[i].Montant);
+						}
+						break;
+					case 2 :
+						printf("You have chosen the sort by ----> lastname ----> Ascending Order \n");
+						for(i = 0 ; i < all_account ; i++)
+						{
+						    for(j = 0 ; j < all_account-i-1 ; j++)
+						    {
+						        if(strcmp(Tab_C[j].Nom, Tab_C[j+1].Nom) < 0)
+						        {
+						        	temp_account = Tab_C[j+1];
+						            Tab_C[j+1]=Tab_C[j];
+						            Tab_C[j]=temp_account;
+						        }
+						    }
+						}
+
+						printf("CIN \t lastname \t Name \t Amount\n\n");
+						for (i = 0 ; i < all_account ; i++) {
+							printf("%s \t %s \t %s \t %g \n", Tab_C[i].CIN, Tab_C[i].Nom, Tab_C[i].Prenom, Tab_C[i].Montant);
+						}
+						break;
+				}
+
+				break;
+
+			case 3 :
+				cleanCls();
+					int i ;
+					int p ;
+					char CIN[10];
+					bool get_it=false;
+					printf("Entrer your CIN code : ");
+					scanf("%s",CIN);
+					for(i = 0; i < all_account; i++) {
+						if (strcmp(CIN, Tab_C[i].CIN) == 0) {
+							get_it=true;
+							p=i;
+						}
+					}
+						if (get_it)
+							printf("CIN code found \t\t lastname : %s \t Name : %s \t CIN : %s \t amount : %f", Tab_C[p].Nom, Tab_C[p].Prenom, Tab_C[p].CIN, Tab_C[p].Montant);
+						else
+							printf("not found !!! \n \n");
+				break;
+		}
+	}while (_choice != 0);
+}
+//+ 1.3%
+bool fedilisation() {
+	int i, j;
+    struct account temp_account;
+	for(i = 0 ; i < all_account ; i++){
+	    for(j = 0 ; j < all_account-i-1 ; j++){
+	        if(Tab_C[j].Montant < Tab_C[j+1].Montant){
+	        	temp_account = Tab_C[j+1];
+	            Tab_C[j+1]=Tab_C[j];
+	            Tab_C[j]=temp_account;
+	        }
+	    }
+	}
+	for (i = 0 ; i < 3 ; i++)
+		Tab_C[i].Montant += (Tab_C[i].Montant * 1.3) / 100;
+
+	cleanCls();
+	printf("lastname : %s \t Name : %s \t CIN : %s \t amount : %f", Tab_C[i].Nom, Tab_C[i].Prenom, Tab_C[i].CIN, Tab_C[i].Montant);
+	printf("1.3 %% of fedilisation uploaded to the three higher accounts ");
 }
 
- Informations(){
 
-     system("cls||clear");
-    int F;
-
-         printf("\t*F : Tape Your Sold  \n\n");
-         scanf("%i",&F);
-         printf("\t0 : Back To Menu \n\n");
-         printf("Select an operation: ");
+int main(){
+	int choice, allNewaccount, i;
+	char data[50], CIN[10];
 
 
 
-    switch(choice){
-    case 1 :
-        printf("the Ascendant");
-        break;
-    case 2 :
-        printf("the Ascendant");
-        break;
-    case 3 :
-        printf("the Ascendant (Montant)");
-        break;
-    case 4 :
-        printf("The Descendan (Montant)");
-        break;
-     case 5 :
-        printf("CIN");
-        break;
-    case 0 :
-        menu(0);
-        break;
+//Main Menu .
 
-    default :
-        printf("invalid option");
+	do {
+        printf("\n");
+        printf("\t\t\t\t\t+Welcome to CodeBank Managment+\n\n\n\n");
 
- }
- }
+		printf("\t\t\t 1  : Introduce an Account . \n\n");
+		printf("\t\t\t 2  : Add Multiply Accounts. \n\n");
+		printf("\t\t\t 3  : Operations . \n\n");
+		printf("\t\t\t 4  : Infos .\n\n");
+		printf("\t\t\t 5  : Fedilisation .\n\n\n");
+		printf("\t\t\t 0  : Exit . \n\n");
 
+		printf("\t\n\n\nSelect an Option   : ");
+		scanf("%d", &choice);
+
+		switch (choice) {
+			case 1 :
+				cleanCls();
+				if(add_account(1)){
+					printf("Your account is created ");
+				} else {
+					printf("Error404");
+				}
+				break;
+			case 2 :
+				cleanCls();
+				printf("Enter the number of accounts that you want to create : ");
+				scanf("%d", &allNewaccount);
+				add_account(allNewaccount);
+				break;
+			case 3 :
+				cleanCls();
+				operations();
+				break;
+			case 4 :
+				cleanCls();
+				display();
+				break;
+			case 5 :
+				cleanCls();
+				fedilisation();
+				break;
+		}
+
+
+	}    while(choice != 0);
+
+
+	return 0;
+}
